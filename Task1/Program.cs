@@ -39,7 +39,7 @@ builder.Services.AddDbContext<TransactionDbContext>(options =>
 
 // Add Services
 builder.Services.AddScoped<ITransactionLogService, TransactionLogService>();
-builder.Services.AddSingleton<RabbitMQService>();
+builder.Services.AddScoped<RabbitMQService>();
 
 // Register OData model
 static IEdmModel GetEdmModel()

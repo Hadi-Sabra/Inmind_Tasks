@@ -1,0 +1,1 @@
+2025-03-12 14:56:26.395 +02:00 [ERR] An error occurred using the connection to database 'BankSystem' on server 'tcp://localhost:5433'.
