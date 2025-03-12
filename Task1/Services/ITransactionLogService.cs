@@ -2,20 +2,13 @@
 
 namespace Task1.Services;
 
-public class ITransactionLogService
+public interface ITransactionLogService
 {
-    public Task<TransactionLog> AddTransactionLogAsync(TransactionLog transactionLog)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<TransactionLog> AddTransactionLogAsync(TransactionLog transactionLog);
 
-    public Task<IEnumerable<TransactionLog>> GetTransactionLogsByAccountIdAsync(long accountId)
-    {
-        throw new NotImplementedException();
-    }
 
-    public IQueryable<TransactionLog> GetTransactionLogsQueryable()
-    {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<TransactionLog>> GetTransactionLogsByAccountIdAsync(long accountId);
+
+
+    public IQueryable<TransactionLog> GetTransactionLogsQueryable();
 }
