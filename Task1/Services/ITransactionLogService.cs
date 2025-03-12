@@ -11,4 +11,8 @@ public interface ITransactionLogService
 
 
     public IQueryable<TransactionLog> GetTransactionLogsQueryable();
+
+    Task<TransactionLogService.AccountBalanceSummary> GetAccountBalanceSummaryAsync(long userId);
+
+    Task<IEnumerable<TransactionLog>> GetCommonTransactionsAsync(List<long> accountIds);
 }

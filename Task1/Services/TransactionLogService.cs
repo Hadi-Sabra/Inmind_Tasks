@@ -56,4 +56,51 @@ public class TransactionLogService : ITransactionLogService
     {
         return _dbContext.TransactionLogs.AsQueryable();
     }
+    
+    public async Task<IEnumerable<TransactionLog>> GetCommonTransactionsAsync(List<long> accountIds)
+    {
+        // Logic to find common transactions between multiple accounts
+        var transactions = await _dbContext.TransactionLogs
+            .Where(t => accountIds.Contains(t.AccountId)) // Filter by provided account IDs
+            .GroupBy(t => new { t.TransactionType, t.Amount }) // Group by transaction type and amount
+            .Where(g => g.Count() > 1) // Only consider common transactions
+            .Select(g => g.FirstOrDefault()) // Select the first transaction from each common group
+            .ToListAsync();
+
+        return transactions;
+    }
+    
+    public async Task<AccountBalanceSummary> GetAccountBalanceSummaryAsync(long userId)
+    {
+        // Logic to calculate balance summary for a user based on transactions
+        var accountTransactions = await _dbContext.TransactionLogs
+            .Where(t => t.AccountId == userId) // Get all transactions for the specific user
+            .ToListAsync();
+
+        var totalDeposits = accountTransactions
+            .Where(t => t.TransactionType == "Deposit")
+            .Sum(t => t.Amount);
+
+        var totalWithdrawals = accountTransactions
+            .Where(t => t.TransactionType == "Withdrawal")
+            .Sum(t => t.Amount);
+
+        var totalBalance = totalDeposits - totalWithdrawals;
+
+        return new AccountBalanceSummary
+        {
+            TotalDeposits = totalDeposits,
+            TotalWithdrawals = totalWithdrawals,
+            TotalBalance = totalBalance
+        };
+    }
+
+
+public class AccountBalanceSummary
+{
+    public decimal TotalDeposits { get; set; }
+    public decimal TotalWithdrawals { get; set; }
+    public decimal TotalBalance { get; set; }
+}
+    
 }

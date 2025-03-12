@@ -144,5 +144,27 @@ namespace Task1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error querying transaction logs");
             }
         }
+        
+        // GET: api/accounts/common-transactions
+        [HttpGet("common-transactions")]
+        public async Task<IActionResult> GetCommonTransactions([FromQuery] List<long> accountIds)
+        {
+            if (accountIds == null || accountIds.Count < 2)
+            {
+                return BadRequest("At least two account IDs are required.");
+            }
+
+            var transactions = await _transactionLogService.GetCommonTransactionsAsync(accountIds);
+            return Ok(transactions);
+        }
+
+        // GET: api/accounts/balance-summary/{userId}
+        [HttpGet("balance-summary/{userId}")]
+        public async Task<IActionResult> GetAccountBalanceSummary(long userId)
+        {
+            var balanceSummary = await _transactionLogService.GetAccountBalanceSummaryAsync(userId);
+            return Ok(balanceSummary);
+        }
     }
+        
 }
