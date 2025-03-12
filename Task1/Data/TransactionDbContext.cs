@@ -12,7 +12,7 @@ namespace Task1.Data
         
         public DbSet<TransactionLog> TransactionLogs { get; set; }
         public DbSet<LogEntry> LogEntries { get; set; } // Add LogEntry
-
+        public DbSet<TransactionEvent> TransactionEvents { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TransactionLog>()

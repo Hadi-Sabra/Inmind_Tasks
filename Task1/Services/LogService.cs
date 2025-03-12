@@ -50,10 +50,7 @@ namespace Task1.Services
                         return Enumerable.Empty<LogEntry>();  // Return empty list if invalid
                     }
                 }
-
-                if (!string.IsNullOrEmpty(routeUrl))
-                    query = query.Where(log => log.RouteUrl.Contains(routeUrl));
-
+                
                 if (startDate.HasValue)
                     query = query.Where(log => log.Timestamp >= startDate.Value);
 

@@ -35,6 +35,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ILogService, LogService>();
 
+builder.Services.AddScoped<TransactionEventService>();
+
 // Add PostgreSQL DbContext
 builder.Services.AddDbContext<TransactionDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
