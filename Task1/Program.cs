@@ -6,6 +6,7 @@ using Serilog;
 using Task1.Data;
 using Task1.Messaging;
 using Task1.Models;
+using Task1.Repositories;
 using Task1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ILogService, LogService>();
 
 builder.Services.AddScoped<TransactionEventService>();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+
 
 // Add PostgreSQL DbContext
 builder.Services.AddDbContext<TransactionDbContext>(options =>
